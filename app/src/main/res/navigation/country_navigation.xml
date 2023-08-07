@@ -10,6 +10,22 @@
         android:name="com.example.iqsectest.ui.country.CountryFragment"
         android:label="@string/title_country_fragment"
         tools:layout="@layout/fragment_country" >
+
+        <action
+            android:id="@+id/action_detailCountry"
+            app:destination="@id/nav_map"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_map"
+        android:name="com.example.iqsectest.ui.maps.MapsFragment"
+        android:label="@string/title_country_fragment"
+        tools:layout="@layout/fragment_maps" >
     </fragment>
 
 </navigation>

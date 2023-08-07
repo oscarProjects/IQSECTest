@@ -1,9 +1,7 @@
 package com.example.iqsectest.network
 
-import com.example.iqsectest.data.OperationResult
-import com.example.iqsectest.data.model.Pais
-import com.example.iqsectest.data.model.Paises
-import com.example.iqsectest.data.model.SoapEnvelope
+import com.example.iqsectest.data.model.CountryEnvelope
+import com.example.iqsectest.data.model.StateEnvelope
 import com.example.iqsectest.di.manager.RetrofitManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -17,9 +15,15 @@ class ApiProvide @Inject constructor(
     private val serviceManager: RetrofitManager
 ) {
 
-    suspend fun getAllCountries(): Response<SoapEnvelope> {
+    suspend fun getAllCountries(): Response<CountryEnvelope> {
         return withContext(Dispatchers.IO){
             serviceManager.callServiceGetAllCountries(buildSoapRequest("GetPaises", ""))
+        }
+    }
+
+    suspend fun getAllStates(idPais: Int): Response<StateEnvelope> {
+        return withContext(Dispatchers.IO){
+            serviceManager.callServiceGetAllStates(buildSoapRequest("GetEstadosbyPais", "<idEstado>$idPais</idEstado>"))
         }
     }
 

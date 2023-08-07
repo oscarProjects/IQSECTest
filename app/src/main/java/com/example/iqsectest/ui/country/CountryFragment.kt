@@ -7,13 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.iqsectest.R
 import com.example.iqsectest.adapters.CountriesAdapter
 import com.example.iqsectest.data.model.Pais
 import com.example.iqsectest.databinding.FragmentCountryBinding
+import com.example.iqsectest.di.manager.NavigationManager
 import com.example.iqsectest.listener.ClickListener
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class CountryFragment : Fragment(), ClickListener{
@@ -23,6 +27,9 @@ class CountryFragment : Fragment(), ClickListener{
     private lateinit var countryViewModel: CountryViewModel
 
     private var adapter: CountriesAdapter? = null
+
+    @Inject
+    lateinit var navigation: NavigationManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +70,15 @@ class CountryFragment : Fragment(), ClickListener{
     }
 
     override fun onClickCard(pais: Pais?) {
-        Toast.makeText(requireContext(), "Hola", Toast.LENGTH_SHORT).show()
+        if (pais != null) {
+            Toast.makeText(requireContext(), "Hola: ${pais.nombrePais}", Toast.LENGTH_SHORT).show()
+            navigation.onNavigate(view, R.id.action_detailCountry, buildArguments(pais))
+        }
+    }
+
+    private fun buildArguments(pais: Pais): Bundle{
+        val bundle = Bundle()
+        bundle.putSerializable("pais", pais)
+        return bundle
     }
 }

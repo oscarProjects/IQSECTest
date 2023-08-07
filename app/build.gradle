@@ -70,4 +70,7 @@ dependencies {
     // Interceptor
     implementation "com.squareup.okhttp3:logging-interceptor:4.7.2"
 
+    //Maps
+    implementation 'com.google.android.gms:play-services-maps:18.1.0'
+
 }
