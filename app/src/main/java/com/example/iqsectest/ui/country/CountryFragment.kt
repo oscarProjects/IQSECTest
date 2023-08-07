@@ -5,16 +5,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.iqsectest.R
 import com.example.iqsectest.adapters.CountriesAdapter
-import com.example.iqsectest.data.Country
+import com.example.iqsectest.data.model.Pais
 import com.example.iqsectest.databinding.FragmentCountryBinding
 import com.example.iqsectest.listener.ClickListener
+import dagger.hilt.android.AndroidEntryPoint
 
-class CountryFragment : Fragment(), ClickListener {
+@AndroidEntryPoint
+class CountryFragment : Fragment(), ClickListener{
 
     private lateinit var _binding: FragmentCountryBinding
 
@@ -60,7 +62,7 @@ class CountryFragment : Fragment(), ClickListener {
         }
     }
 
-    override fun onClickCard(note: Country) {
-        TODO("Not yet implemented")
+    override fun onClickCard(pais: Pais?) {
+        Toast.makeText(requireContext(), "Hola", Toast.LENGTH_SHORT).show()
     }
 }
