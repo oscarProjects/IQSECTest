@@ -16,6 +16,7 @@ import com.example.iqsectest.data.model.Pais
 import com.example.iqsectest.databinding.FragmentCountryBinding
 import com.example.iqsectest.di.manager.NavigationManager
 import com.example.iqsectest.listener.ClickListener
+import com.example.iqsectest.util.ConstantsIQSEC
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -78,7 +79,7 @@ class CountryFragment : Fragment(), ClickListener{
 
     private fun buildArguments(pais: Pais): Bundle{
         val bundle = Bundle()
-        bundle.putSerializable("pais", pais)
+        bundle.putSerializable(ConstantsIQSEC.ARG_PAIS, pais)
         return bundle
     }
 }

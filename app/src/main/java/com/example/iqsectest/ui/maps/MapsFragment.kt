@@ -1,6 +1,7 @@
 package com.example.iqsectest.ui.maps
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,8 @@ import com.example.iqsectest.R
 import com.example.iqsectest.data.model.Estado
 import com.example.iqsectest.data.model.Pais
 import com.example.iqsectest.databinding.FragmentMapsBinding
+import com.example.iqsectest.ui.detail.DetailBottomSheet
+import com.example.iqsectest.util.ConstantsIQSEC
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
@@ -30,10 +33,12 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
     lateinit var paisArg: Pais
 
+    lateinit var newStates: List<Estado>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if(arguments != null){
-            paisArg = requireArguments().getSerializable("pais") as Pais
+            paisArg = requireArguments().getSerializable(ConstantsIQSEC.ARG_PAIS) as Pais
         }
     }
 
@@ -54,6 +59,7 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
     private fun initObservers() {
         mapsViewModel.statesList.observe(viewLifecycleOwner) {
             if(!it.isNullOrEmpty()){
+                newStates = it
                 loadMarkers(it)
             }
         }
@@ -86,7 +92,29 @@ class MapsFragment : Fragment(), GoogleMap.OnMarkerClickListener {
 
     override fun onMarkerClick(p0: Marker): Boolean {
         Toast.makeText(requireContext(), p0.title, Toast.LENGTH_SHORT).show()
+        val fragment = DetailBottomSheet()
+        val state = getData(p0.title)
+        fragment.arguments = state?.let { it1 -> buildArguments(it1, paisArg) }
+        fragment.let { it.show(requireFragmentManager(), it.tag) }
         return true
+    }
+
+    private fun buildArguments(estado: Estado, pais: Pais): Bundle{
+        val bundle = Bundle()
+        bundle.putSerializable(ConstantsIQSEC.ARG_PAIS, pais)
+        bundle.putSerializable(ConstantsIQSEC.ARG_ESTADO, estado)
+        return bundle
+    }
+
+    private fun getData(title: String?): Estado? {
+        var stateReturn: Estado? = null
+        newStates.forEach{
+            if(title.equals(it.estadoNombre)){
+                stateReturn = it
+            }
+        }
+
+        return stateReturn
     }
 
 }

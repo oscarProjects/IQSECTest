@@ -61,7 +61,7 @@ data class Estado(
 
     @field:Element(name = "idPais")
     var idPais: Int? = null
-)
+): Serializable
 
 @Root(name = "Estados")
 data class Estados(

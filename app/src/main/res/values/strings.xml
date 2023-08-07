@@ -5,4 +5,7 @@
 
     <string name="id_country_item">Id</string>
     <string name="name_country_item">Nombre</string>
+    <string name="title_country">País</string>
+    <string name="title_coordinates">Coordenadas</string>
+    <string name="title_state">Estado:</string>
 </resources>
